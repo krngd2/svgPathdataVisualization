@@ -1,0 +1,115 @@
+<style>
+svg path, svg line {
+	transition: d 0.35s;
+
+
+}
+svg{
+	border:1px solid red;
+}
+body{
+	padding:2rem;
+}
+</style>
+<h1>SVG Path Bézier Curves</h1>
+<input type="radio" name="curveType" value="cubic"checked onclick="curveChange(this);" > Cubic Bézier 
+<input type="radio" name="curveType" value="quadratic" onclick="curveChange(this);"> Quadratic Bezier
+<br>
+<svg>
+	<line id="curve1" x1="40" y1="55" x2="15" y2="5" stroke="black"/>
+	<line id="curve2" x1="140" y1="55" x2="50" y2="50" stroke="black"/>
+	<line id="scurve" x1="150" y1="75" x2="100" y2="25" stroke="black" />
+	<path id="curveD"
+		fill="none"
+	       	stroke="#333333"
+	       	stroke-width="3" 
+		d="M40,55 C15,5 50,50 140,55 S100,25 150,75 "/>
+	  </svg>
+	  <h2>&lt;path d="<span id="heading"></span>" /&gt;</h2>
+	  <div>
+		  <h3>Move</h3>
+		  <lable for="path-mx">Move X</lable>
+		  <input id="pathMx" type="range" min="1" max="300" value="40" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)">
+		  <lable for="path-my">Move Y</lable>
+		  <input id="pathMy" type="range" min="1" max="150" value="55" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)">
+	  </div>
+	  <div id="cCurveDiv">
+		  <h3>C curve</h3>
+		  <lable>Curve 1 X</lable>
+		  <input id="cStartX" type="range" min="1" max="300" value="15" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)" />
+		  <lable>Curve 1 Y</lable>
+		  <input id="cStartY" type="range" min="1" max="150" value="5" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)" />
+
+		  <lable for="x">Curve 2 X</lable>
+	  	<input id="cCurveX" type="range" min="1" max="300" value="50" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)">
+	  	<lable for="y">Curve 2 Y</lable>
+		<input id="cCurveY" type="range" min="1" max="150" value="50" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)">
+		<lable>End X<lable>
+		<input id="cEndX" type="range" min="1" max="300" value="140" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)" />
+		<lable>End Y<lable>
+		<input id="cEndY" type="range" min="1" max="150" value="55"  oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)"/>
+		<br>
+		<lable>S X 1<lable>
+		<input id="sX1" type="range" min="1" max="300" value="150"  oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)"/>
+		<lable>S Y 1<lable>
+		<input id="sY1" type="range" min="1" max="150" value="150"  oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)"/>
+		<lable>S X2<lable>
+		<input id="sX2" type="range" min="1" max="300" value="150"  oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)"/>
+		<lable>S Y2<lable>
+		<input id="sY2" type="range" min="1" max="150" value="75"  oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY,sX1,sY1,sX2,sY2)"/>
+	</div>
+	<div id="qCurveDiv">
+		<p>Q Curve Div</p>
+	</div>
+	<script>
+	
+		var data = `M40,55 C15,5 50,50 140,55 S150,75`
+		var heading = document.getElementById("heading")
+		
+		heading.innerHTML = data
+		function changed(mx,my,csx,csy,cx,cy,cex,cey,sx1,sy1,sx2,sy2){
+			data = `M${mx.value},${my.value} C${csx.value},${csy.value} ${cx.value},${cy.value} ${cex.value},${cey.value} S${sx1.value},${sy1.value} ${sx2.value},${sy2.value}`
+			heading.innerHTML = data;
+			document.getElementById("curveD").setAttribute("d", data)
+			
+			let line1 = document.getElementById("curve1")
+			let line2 = document.getElementById("curve2")
+			let sline = document.getElementById("scurve")
+			line1.setAttribute("x1",mx.value)
+			line1.setAttribute("y1",my.value)
+			line1.setAttribute("x2",csx.value)
+			line1.setAttribute("y2",csy.value)
+			
+			line2.setAttribute("x1",cex.value)
+			line2.setAttribute("y1",cey.value)
+			line2.setAttribute("x2",cx.value)
+			line2.setAttribute("y2",cy.value)
+
+			sline.setAttribute("x1",sx1.value)
+			sline.setAttribute("y1",sy1.value)
+			sline.setAttribute("x2",sx2.value)
+			sline.setAttribute("y2",sy2.value)
+
+			console.log(data)
+
+		}
+		var svgPath = document.getElementById("curveD")
+		function curveChange(btn){
+			let cCurveDiv = document.getElementById("cCurveDiv")
+			let qCurveDiv = document.getElementById("qCurveDiv")
+
+			if(btn.value == "quadratic"){
+				cCurveDiv.style.display = "none";
+				qCurveDiv.style.display = "block";	
+				data = `M40,55 Q95 10 180 80`
+				heading.innerHTML = data
+				svgPath.setAttribute("d", data)		
+			}else{
+				qCurveDiv.style.display = "none";
+				cCurveDiv.style.display = "block";
+				data = `M40,55 C15,5 50,50 140,55 S150,75`
+				heading.innerHTML = data
+				svgPath.setAttribute("d", data)
+			}
+		}
+</script>
