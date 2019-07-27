@@ -1,0 +1,75 @@
+<style>
+    svg path, svg line {
+        transition: d 0.35s; 
+    }
+    svg{
+        border:1px solid red;
+    }
+    body{
+        padding:2rem;
+    }
+    </style>
+    <h1>SVG Path Quadric Bezier</h1> 
+    <svg>
+        <line id="qLine1" x1="38" y1="55" x2="89" y2="5" stroke="black"stroke-dasharray="5,5"/>
+        <line id="qLine2" x1="140" y1="55" x2="89" y2="5" stroke="black" stroke-dasharray="5,5"/>  
+        <path id="curveD"
+            fill="none"
+            stroke="#333333"
+            stroke-width="3" 
+            d="M38 55 Q89,5 140,55 T231,49"/>
+          </svg>
+          <h2>&lt;path d="<span id="heading"></span>" /&gt;</h2>
+          <div>
+            <h3>Move</h3>
+            <lable for="path-mx">Move X</lable>
+            <input id="pathMx" 
+            type="range" min="1" max="300" value="38" oninput="changed(pathMx.value,pathMy.value,qStartX.value,qStartY.value,qEndX.value,qEndY.value,tX1.value,tY1.value)">
+            <lable for="path-my">Move Y</lable>
+            <input id="pathMy" type="range" min="1" max="150" value="55" oninput="changed(pathMx.value,pathMy.value,qStartX.value,qStartY.value,qEndX.value,qEndY.value,tX1.value,tY1.value)">
+          </div>
+          <div id="cCurveDiv">
+            <h3>Q curve</h3>
+            <lable>Curve 1 X</lable>
+            <input id="qStartX" type="range" min="1" max="300" value="89" oninput="changed(pathMx.value,pathMy.value,qStartX.value,qStartY.value,qEndX.value,qEndY.value,tX1.value,tY1.value)" />
+            <lable>Curve 1 Y</lable>
+            <input id="qStartY" type="range" min="1" max="150" value="5" oninput="changed(pathMx.value,pathMy.value,qStartX.value,qStartY.value,qEndX.value,qEndY.value,tX1.value,tY1.value)" />
+    
+            <lable>End X<lable>
+            <input id="qEndX" type="range" min="1" max="300" value="140" oninput="changed(pathMx.value,pathMy.value,qStartX.value,qStartY.value,qEndX.value,qEndY.value,tX1.value,tY1.value)" />
+            <lable>End Y<lable>
+            <input id="qEndY" type="range" min="1" max="150" value="55"  oninput="changed(pathMx.value,pathMy.value,qStartX.value,qStartY.value,qEndX.value,qEndY.value,tX1.value,tY1.value)"/>
+            <br>
+            <lable>T X 1<lable>
+            <input id="tX1" type="range" min="1" max="300" value="231"  oninput="changed(pathMx.value,pathMy.value,qStartX.value,qStartY.value,qEndX.value,qEndY.value,tX1.value,tY1.value)"/>
+            <lable>T Y 1<lable>
+            <input id="tY1" type="range" min="1" max="150" value="49"  oninput="changed(pathMx.value,pathMy.value,qStartX.value,qStartY.value,qEndX.value,qEndY.value,tX1.value,tY1.value)"/>
+           </div> 
+<script>
+     
+    var data = `M38 55 Q89,5 140,55 T231,49`
+    var heading = document.getElementById("heading")
+
+    var qLine1 = document.getElementById("qLine1")
+    var qLine2  = document.getElementById("qLine2") 
+
+    var svgPath = document.getElementById("curveD")
+    heading.innerHTML = data
+    function changed(pathMx,pathMy,qStartX,qStartY,qEndX,qEndY,tX1,tY1){
+        data = `M${pathMx} ${pathMy} Q${qStartX},${qStartY} ${qEndX},${qEndY} T${tX1},${tY1}`
+        heading.innerHTML = data;
+        svgPath.setAttribute("d", data)
+
+        qLine1.setAttribute("x1",pathMx)
+        qLine1.setAttribute("y1",pathMy)
+        qLine1.setAttribute("x2",qStartX)
+        qLine1.setAttribute("y2",qStartY) 
+
+        qLine2.setAttribute("x1",qEndX)
+        qLine2.setAttribute("y1",qEndY)
+        qLine2.setAttribute("x2",qStartX)
+        qLine2.setAttribute("y2",qStartY) 
+ 
+    }
+</script>
+    

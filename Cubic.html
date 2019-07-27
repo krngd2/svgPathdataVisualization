@@ -1,0 +1,83 @@
+<style>
+    svg path, svg line {
+        transition: d 0.35s; 
+    }
+    svg{
+        border:1px solid red;
+    }
+    body{
+        padding:2rem;
+    }
+    </style>
+    <h1>SVG Path Bezier Curves</h1> 
+    <svg>
+        <line id="curve1" x1="42" y1="94" x2="83" y2="23" stroke="black"stroke-dasharray="5,5"/>
+        <line id="curve2" x1="260" y1="102" x2="194" y2="19" stroke="black" stroke-dasharray="5,5"/> 
+        <path id="curveD"
+            fill="none"
+                   stroke="#333333"
+                   stroke-width="3" 
+            d="M42,94 C83,23 194,19 260,102"/>
+          </svg>
+          <h2>&lt;path d="<span id="heading"></span>" /&gt;</h2>
+          <div>
+              <h3>Move</h3>
+              <lable for="path-mx">Move X</lable>
+              <input id="pathMx" type="range" min="1" max="300" value="42" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY )">
+              <lable for="path-my">Move Y</lable>
+              <input id="pathMy" type="range" min="1" max="150" value="94" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY )">
+          </div>
+          <div id="cCurveDiv">
+            <h3>C curve</h3>
+            <lable>Curve 1 X</lable>
+            <input id="cStartX" type="range" min="1" max="300" value="83" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY)" />
+            <lable>Curve 1 Y</lable>
+            <input id="cStartY" type="range" min="1" max="150" value="23" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY)" />
+            <br>
+            <lable for="x">Curve 2 X</lable>
+            <input id="cCurveX" type="range" min="1" max="300" value="194" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY)">
+            <lable for="y">Curve 2 Y</lable>
+            <input id="cCurveY" type="range" min="1" max="150" value="19" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY)">
+            <lable>End X<lable>
+            <input id="cEndX" type="range" min="1" max="300" value="260" oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY)" />
+            <lable>End Y<lable>
+            <input id="cEndY" type="range" min="1" max="150" value="102"  oninput="changed(pathMx,pathMy,cStartX,cStartY,cCurveX,cCurveY,cEndX,cEndY)"/>
+            <br>
+        </div>
+        <div id="qCurveDiv">
+            <p>Q Curve Div</p>
+        </div>
+        <script>
+        
+            var data = `M42,94 C83,23 194,19 260,102`
+            var heading = document.getElementById("heading")
+        
+            var cCurveDiv = document.getElementById("cCurveDiv")
+            var qCurveDiv = document.getElementById("qCurveDiv")
+            qCurveDiv.style.display = "none";
+            var svgPath = document.getElementById("curveD")
+            heading.innerHTML = data
+            function changed(mx,my,csx,csy,cx,cy,cex,cey){
+                data = `M${mx.value},${my.value} C${csx.value},${csy.value} ${cx.value},${cy.value} ${cex.value},${cey.value}`
+                heading.innerHTML = data;
+                svgPath.setAttribute("d", data)
+                
+                let line1 = document.getElementById("curve1")
+                let line2 = document.getElementById("curve2") 
+                
+                line1.setAttribute("x1",mx.value)
+                line1.setAttribute("y1",my.value)
+                line1.setAttribute("x2",csx.value)
+                line1.setAttribute("y2",csy.value)
+                
+                line2.setAttribute("x1",cex.value)
+                line2.setAttribute("y1",cey.value)
+                line2.setAttribute("x2",cx.value)
+                line2.setAttribute("y2",cy.value) 
+    
+                console.log(data)
+    
+            }
+ 
+    </script>
+    
