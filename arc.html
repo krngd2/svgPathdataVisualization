@@ -1,0 +1,73 @@
+<style>
+    svg path, svg line {
+        transition: d 0.35s; 
+    }
+    svg{
+        border:1px solid red;
+    }
+    body{
+        padding:2rem;
+    }
+    </style>
+    <h1>SVG Path Bezier Curves</h1> 
+    <svg>
+        <path id="curveD"
+            fill="none"
+                   stroke="#333333"
+                   stroke-width="3" 
+            d="M20,75 L125,75 A1,2 0 0,1 175,75 L280,75"/>
+          </svg>
+          <h2>&lt;path d="<span id="heading"></span>" /&gt;</h2>
+          <div>
+              <h3>Move</h3>
+              <lable for="path-mx">Move X</lable>
+              <input id="pathMx" type="range" min="1" max="300" value="42" oninput="changed(pathMx,pathMy,arc1,arc2,angle,side,flip,endX,endY)">
+              <lable for="path-my">Move Y</lable>
+              <input id="pathMy" type="range" min="1" max="150" value="94" oninput="changed(pathMx,pathMy,arc1,arc2,angle,side,flip,endX,endY)">
+          </div>
+          <div id="cCurveDiv">
+            <h3>Arc</h3>
+            <lable>Ration/Radius 1</lable>
+            <input id="arc1" type="range" min="1" max="50" value="1" oninput="changed(pathMx,pathMy,arc1,arc2,angle,side,flip,endX,endY)" />
+            <lable>Ration/Radius 2</lable>
+            <input id="arc2" type="range" min="1" max="50" value="1" oninput="changed(pathMx,pathMy,arc1,arc2,angle,side,flip,endX,endY)" />
+            <br>
+            <lable>Angel value</lable>
+            <input id="angle" type="range" min="0" max="360" value="0" oninput="changed(pathMx,pathMy,arc1,arc2,angle,side,flip,endX,endY)">
+            <lable>Side</lable>
+            <input id="side" type="checkbox" oninput="changed(pathMx,pathMy,arc1,arc2,angle,side,flip,endX,endY)">
+            <lable>Flip<lable>
+            <input id="flip" type="checkbox" oninput="changed(pathMx,pathMy,arc1,arc2,angle,side,flip,endX,endY)" />
+            <lable>End X<lable>
+            <input id="endX" type="range" min="1" max="300" value="280" oninput="changed(pathMx,pathMy,arc1,arc2,angle,side,flip,endX,endY)" />
+            <lable>End Y<lable>
+            <input id="endY" type="range" min="1" max="150" value="75"  oninput="changed(pathMx,pathMy,arc1,arc2,angle,side,flip,endX,endY)"/>
+            <br>
+        </div>
+        <div id="qCurveDiv">
+            <p>Q Curve Div</p>
+        </div>
+        <script>
+        
+            var data = `M20,75 L125,75 A1,2 0 0,1 175,75 L280,75`
+            var heading = document.getElementById("heading")
+        
+            var cCurveDiv = document.getElementById("cCurveDiv")
+            var qCurveDiv = document.getElementById("qCurveDiv")
+            qCurveDiv.style.display = "none";
+            var svgPath = document.getElementById("curveD")
+            heading.innerHTML = data
+            
+            
+            
+            function changed(mx,my,a1,a2,angle,side,flip,cex,cey){
+                data = `M20,75 L${mx.value},${my.value} A${a1.value},${a2.value} ${angle.value} ${side.checked == true ? "0":"1"},${flip.checked == true ? "0":"1"} ${cex.value},${cey.value} L280,75`
+                heading.innerHTML = data;
+                svgPath.setAttribute("d", data)
+    
+                console.log(data)
+    
+            }
+            
+    </script>
+    
